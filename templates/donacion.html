@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Registrar Donación</title></head>
+<body>
+  <h2>Registrar Donación</h2>
+  <form id="donForm">
+    Tipo: <input name="tipo" required><br>
+    Talla: <input name="talla" required><br>
+    Cantidad: <input name="cantidad" type="number" required min="1"><br>
+    Descripción: <input name="descripcion"><br>
+    <button type="submit">Enviar</button>
+  </form>
+  <div id="res"></div>
+<script>
+document.getElementById('donForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const f = e.target;
+  const body = {
+    tipo: f.tipo.value,
+    talla: f.talla.value,
+    cantidad: f.cantidad.value,
+    descripcion: f.descripcion.value
+  };
+  const res = await fetch('http://127.0.0.1:5000/api/donations', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  document.getElementById('res').innerText = JSON.stringify(data);
+});
+</script>
+</body>
+</html>

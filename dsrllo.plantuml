@@ -1,0 +1,25 @@
+@startuml
+package "Frontend" {
+  [UI: Donación] 
+  [UI: Inventario]
+  [UI: Beneficiario]
+  [UI: Entrega]
+}
+package "Backend (API)" {
+  [API REST]
+  [Service: Donaciones]
+  [Service: Inventario]
+  [Service: Beneficiarios]
+  [Service: Entregas]
+}
+package "Base de datos" {
+  [SQLite DB]
+}
+[UI: Donación] --> [API REST]
+[UI: Inventario] --> [API REST]
+[API REST] --> [Service: Donaciones]
+[API REST] --> [Service: Inventario]
+[Service: Donaciones] --> [SQLite DB]
+[Service:Beneficiarios] --> [SQLite DB]
+[Service:Entregas] --> [SQLite DB]
+@enduml
