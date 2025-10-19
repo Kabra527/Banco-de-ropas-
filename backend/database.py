@@ -1,19 +1,22 @@
 import sqlite3
 from contextlib import closing
+DB_PATH = 'bancode_ropas.db'
 
-DB_PATH = "bancode_ropas.db"
+def get_connection():
+    conn = sqlite3.connect(DB_PATH, timeout=10)
+    conn.row_factory = sqlite3.Row
+    return conn
 
 def init_db():
-    with closing(sqlite3.connect(DB_PATH)) as conn:
+    with closing(get_connection()) as conn:
         c = conn.cursor()
-        # Crear tablas
         c.execute('''
         CREATE TABLE IF NOT EXISTS donations (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            tipo TEXT,
-            talla TEXT,
-            cantidad INTEGER,
-            fecha TEXT,
+            tipo TEXT NOT NULL,
+            talla TEXT NOT NULL,
+            cantidad INTEGER NOT NULL,
+            fecha TEXT DEFAULT CURRENT_TIMESTAMP,
             estado TEXT,
             descripcion TEXT
         );
@@ -21,7 +24,7 @@ def init_db():
         c.execute('''
         CREATE TABLE IF NOT EXISTS beneficiaries (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre TEXT,
+            nombre TEXT NOT NULL,
             contacto TEXT,
             direccion TEXT
         );
@@ -30,7 +33,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS deliveries (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             beneficiary_id INTEGER,
-            fecha TEXT,
+            fecha TEXT DEFAULT CURRENT_TIMESTAMP,
             usuario TEXT,
             observaciones TEXT,
             FOREIGN KEY(beneficiary_id) REFERENCES beneficiaries(id)
@@ -47,8 +50,3 @@ def init_db():
         );
         ''')
         conn.commit()
-
-def get_connection():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn

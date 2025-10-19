@@ -1,0 +1,17 @@
+import pytest
+from backend import app, init_db
+
+@pytest.fixture
+def client(tmp_path, monkeypatch):
+    # crea DB temporal si quieres (opcional), o usar DB real
+    app.config['TESTING'] = True
+    client = app.test_client()
+    yield client
+
+def test_create_and_list(client):
+    rv = client.post('/api/donaciones', json={'tipo':'Camisa','talla':'M','cantidad':3})
+    assert rv.status_code == 201
+    res = client.get('/api/donaciones')
+    assert res.status_code == 200
+    data = res.get_json()
+    assert isinstance(data, list)

@@ -7,7 +7,7 @@
   <ul id="list"></ul>
 <script>
 document.getElementById('load').addEventListener('click', async ()=>{
-  const res = await fetch('http://127.0.0.1:5000/api/donations');
+  const res = await fetch('/api/donaciones');
   const items = await res.json();
   const ul = document.getElementById('list');
   ul.innerHTML = '';

@@ -16,12 +16,12 @@ document.getElementById('donForm').addEventListener('submit', async (e)=>{
   e.preventDefault();
   const f = e.target;
   const body = {
-    tipo: f.tipo.value,
-    talla: f.talla.value,
-    cantidad: f.cantidad.value,
-    descripcion: f.descripcion.value
+    tipo: f.tipo.value.trim(),
+    talla: f.talla.value.trim(),
+    cantidad: parseInt(f.cantidad.value,10),
+    descripcion: f.descripcion.value.trim()
   };
-  const res = await fetch('http://127.0.0.1:5000/api/donations', {
+  const res = await fetch('/api/donaciones', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body: JSON.stringify(body)
