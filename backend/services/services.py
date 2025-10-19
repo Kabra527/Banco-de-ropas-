@@ -11,7 +11,7 @@ class DonationService:
             c = conn.cursor()
             c.execute(
                 'INSERT INTO donations (tipo,talla,cantidad,estado,descripcion,fecha) VALUES (?,?,?,?,?,?)',
-                (tipo, talla, cantidad, 'pendiente', descripcion, datetime.utcnow().isoformat())
+                (tipo, talla, cantidad, 'pendiente', descripcion, datetime.now(timezone.utc).isoformat())
             )
             conn.commit()
             return c.lastrowid
