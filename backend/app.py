@@ -1,3 +1,9 @@
+from flask_wtf.csrf import CSRFProtect
+
+app = Flask(__name__)
+app.secret_key = 'una_clave_segura_para_csrf'
+csrf = CSRFProtect(app)
+
 from flask import Flask, render_template, request, jsonify
 from backend.services.services import DonationService
 from backend.database import init_db
