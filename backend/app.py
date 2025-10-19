@@ -1,8 +1,15 @@
 from flask_wtf.csrf import CSRFProtect
 
+import os
+from flask_wtf.csrf import CSRFProtect
+
 app = Flask(__name__)
-app.secret_key = 'una_clave_segura_para_csrf'
+
+# Cargar la clave secreta desde variable de entorno
+app.secret_key = os.environ.get('SECRET_KEY', 'default_secret_key_for_dev')
+
 csrf = CSRFProtect(app)
+
 
 from flask import Flask, render_template, request, jsonify
 from backend.services.services import DonationService
