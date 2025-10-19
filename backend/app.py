@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
-from services import DonationService, init_db
+from backend.services.services import DonationService
+from backend.database import init_db
 import logging
 
 app = Flask(__name__)
